@@ -1,32 +1,34 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require("mongoose");
-const User = require('./models/User');
-const Post = require('./models/Post');
-const bcrypt = require('bcryptjs');
-const app = express();
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-const multer = require('multer');
+import express, { json } from 'express';
+import cors from 'cors';
+
+
+import { connect } from "mongoose";
+import { create, findOne } from './models/User';
+import { create as _create, findById, find } from './models/Post';
+import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
+
+import { sign, verify } from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+import multer from 'multer';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 
-const salt = bcrypt.genSaltSync(10);
+const salt = genSaltSync(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
 
-app.use(cors({credentials:true,origin:'http://localhost:3000'}));
-app.use(express.json());
+app.use(cors({mode: 'cors',credentials:true,origin:'http://localhost:4000'}));
+app.use(json());
 app.use(cookieParser());
-app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use('/uploads', (__dirname + '/uploads'));
 
-mongoose.connect('mongodb+srv://blog:RD8paskYC8Ayj09u@cluster0.pflplid.mongodb.net/?retryWrites=true&w=majority');
+connect('mongodb+srv://01laurenjohnson:<b5QPjetOvQrScSuw>@cluster0.wqyzutj.mongodb.net/');
 
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
   try{
-    const userDoc = await User.create({
+    const userDoc = await create({
       username,
-      password:bcrypt.hashSync(password,salt),
+      password:hashSync(password,salt),
     });
     res.json(userDoc);
   } catch(e) {
@@ -37,11 +39,11 @@ app.post('/register', async (req,res) => {
 
 app.post('/login', async (req,res) => {
   const {username,password} = req.body;
-  const userDoc = await User.findOne({username});
-  const passOk = bcrypt.compareSync(password, userDoc.password);
+  const userDoc = await findOne({username});
+  const passOk = compareSync(password, userDoc.password);
   if (passOk) {
     // logged in
-    jwt.sign({username,id:userDoc._id}, secret, {}, (err,token) => {
+    sign({username,id:userDoc._id}, secret, {}, (err,token) => {
       if (err) throw err;
       res.cookie('token', token).json({
         id:userDoc._id,
@@ -55,7 +57,7 @@ app.post('/login', async (req,res) => {
 
 app.get('/profile', (req,res) => {
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, (err,info) => {
+  verify(token, secret, {}, (err,info) => {
     if (err) throw err;
     res.json(info);
   });
@@ -73,10 +75,10 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
   fs.renameSync(path, newPath);
 
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, async (err,info) => {
+  verify(token, secret, {}, async (err,info) => {
     if (err) throw err;
     const {title,summary,content} = req.body;
-    const postDoc = await Post.create({
+    const postDoc = await _create({
       title,
       summary,
       content,
@@ -99,10 +101,10 @@ app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
   }
 
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, async (err,info) => {
+  verify(token, secret, {}, async (err,info) => {
     if (err) throw err;
     const {id,title,summary,content} = req.body;
-    const postDoc = await Post.findById(id);
+    const postDoc = await findById(id);
     const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
     if (!isAuthor) {
       return res.status(400).json('you are not the author');
@@ -121,7 +123,7 @@ app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
 
 app.get('/post', async (req,res) => {
   res.json(
-    await Post.find()
+    await find()
       .populate('author', ['username'])
       .sort({createdAt: -1})
       .limit(20)
@@ -130,7 +132,7 @@ app.get('/post', async (req,res) => {
 
 app.get('/post/:id', async (req, res) => {
   const {id} = req.params;
-  const postDoc = await Post.findById(id).populate('author', ['username']);
+  const postDoc = await findById(id).populate('author', ['username']);
   res.json(postDoc);
 })
 
