@@ -24,9 +24,9 @@ const secret = 'asdfe45we45w345wegw345werjktjwertkj';
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', (__dirname + '/uploads'));
+// app.use('/uploads', (__dirname + '/uploads'));
 
-connect('mongodb+srv://01laurenjohnson:<b5QPjetOvQrScSuw>@cluster0.wqyzutj.mongodb.net/');
+mongoose.connect('mongodb+srv://01laurenjohnson:b5QPjetOvQrScSuw@cluster0.wqyzutj.mongodb.net/');
 
 app.post('/register', async (req,res) => {
   const {username,password} = req.body;
@@ -141,7 +141,7 @@ app.get('/post/:id', async (req, res) => {
   res.json(postDoc);
 })
 
-app.listen(4000);
+app.listen(5000);
 //
 
-export default router
+
