@@ -13,12 +13,12 @@ Search Functionality: Users can search for articles based on keywords or categor
 Responsive Design: The application is designed to work seamlessly across various devices and screen sizes.
 
 Technologies Used:
-MongoDB
-Express.js
-React.js
-Node.js
-JWT Authentication
-Bootstrap
-Axios
+MongoDB,
+Express.js,
+React.js,
+Node.js,
+JWT Authentication,
+Bootstrap,
+Axios, and
 React Router
 
