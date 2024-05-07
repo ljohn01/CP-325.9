@@ -17,6 +17,37 @@ function Blog() {
                 <p className="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium illo tenetur, corrupti dolorum eos ipsa nulla fugit, deleniti debitis quia labore sint aspernatur! Similique eligendi nam dignissimos, nulla omnis quo?</p>
                 </div>
             </div>
+
+            <div className="post">
+                <div className="image">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""/>
+                </div>
+
+                <div className="texts">
+                <h2>5 Safety Measures To Use At Your First Concert</h2>
+                <p className="info">
+                    <a className="author">Mojo Jojo</a>
+                    <time>2024-05-06 09:23</time>
+                </p>
+                <p className="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium illo tenetur, corrupti dolorum eos ipsa nulla fugit, deleniti debitis quia labore sint aspernatur! Similique eligendi nam dignissimos, nulla omnis quo?</p>
+                </div>
+            </div>
+
+            <div className="post">
+                <div className="image">
+                <img src="https://images.unsplash.com/photo-1527150122806-f682d2fd8b09?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""/>
+                </div>
+
+                <div className="texts">
+                <h2>How To Find Your Perfect Music Genre</h2>
+                <p className="info">
+                    <a className="author">shyguy04</a>
+                    <time>2024-05-07 11:46</time>
+                </p>
+                <p className="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium illo tenetur, corrupti dolorum eos ipsa nulla fugit, deleniti debitis quia labore sint aspernatur! Similique eligendi nam dignissimos, nulla omnis quo?</p>
+                </div>
+            </div>
+
         </main>
     )
 }
