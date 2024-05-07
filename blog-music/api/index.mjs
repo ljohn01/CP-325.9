@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from "mongoose";
 import User from './models/User.mjs';
+import Post from './models/Post.mjs';
 // import Post from './models/Post.mjs';
 // import { genSaltSync } from 'bcryptjs';
 import bcrypt from 'bcryptjs';
