@@ -1,23 +1,28 @@
-import express, { json } from 'express';
+import express from 'express';
 import cors from 'cors';
+import mongoose from "mongoose";
+import User from './models/User.mjs';
+// import Post from './models/Post.mjs';
+// import { genSaltSync } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
+// const express = require('express');
+const app = express();
 
-
-import { connect } from "mongoose";
-import { create, findOne } from './models/User';
-import { create as _create, findById, find } from './models/Post';
-import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
-
-import { sign, verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import multer from 'multer';
 const uploadMiddleware = multer({ dest: 'uploads/' });
+import { renameSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url); 
+const __dirname = path.dirname(__filename); 
+const router = express.Router();
 
-
-const salt = genSaltSync(10);
+const salt = bcrypt.genSalt(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
-
-app.use(cors({mode: 'cors',credentials:true,origin:'http://localhost:4000'}));
-app.use(json());
+app.use(cors());
+app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', (__dirname + '/uploads'));
 
@@ -72,7 +77,7 @@ app.post('/post', uploadMiddleware.single('file'), async (req,res) => {
   const parts = originalname.split('.');
   const ext = parts[parts.length - 1];
   const newPath = path+'.'+ext;
-  fs.renameSync(path, newPath);
+  renameSync(path, newPath);
 
   const {token} = req.cookies;
   verify(token, secret, {}, async (err,info) => {
@@ -97,7 +102,7 @@ app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
     const parts = originalname.split('.');
     const ext = parts[parts.length - 1];
     newPath = path+'.'+ext;
-    fs.renameSync(path, newPath);
+    renameSync(path, newPath);
   }
 
   const {token} = req.cookies;
@@ -139,3 +144,4 @@ app.get('/post/:id', async (req, res) => {
 app.listen(4000);
 //
 
+export default router
