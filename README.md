@@ -19,7 +19,7 @@ MongoDB,
 Express.js,
 React.js,
 Node.js,
-JWT Authentication,
+Bcrypt Authentication,
 Bootstrap,
 Axios, and
 React Router
