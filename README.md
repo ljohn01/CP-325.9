@@ -24,3 +24,14 @@ Bootstrap,
 Axios, and
 React Router
 
+Home Page
+---
+A home page showcasing where the blog posts are held with a few examples of how the posts are displayed.
+
+Login and Signup Pages
+---
+Two simple pages that allow users to login to the Harmonic Haven blog if they have an account, or for new users to signup for the blog as well.
+
+Blog Posting Page
+---
+A page where users are able to upload a blog post if they have any updates or news they want to share about music (i.e. concerts nearby, new albums coming out, songs they are loving recently, etc.)
