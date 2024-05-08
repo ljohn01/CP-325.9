@@ -21,7 +21,6 @@ React.js,
 Node.js,
 Bcrypt Authentication,
 Bootstrap,
-Axios, and
 React Router
 
 Home Page
