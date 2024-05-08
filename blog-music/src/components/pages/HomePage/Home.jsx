@@ -3,6 +3,7 @@ import HeroSection from '../../HeroSection'
 import { homeObjOne } from './Data'
 import Blog from '../BlogPage/Blog'
 
+
 function Home() {
   return (
     <>

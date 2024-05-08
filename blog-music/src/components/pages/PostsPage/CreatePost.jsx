@@ -34,7 +34,7 @@ export default function CreatePost() {
   return (
   
     <form className="postform" onSubmit={createNewPost}>
-      <h1>Create a post</h1>
+      <h1 className="head1">Create a post</h1>
       <input type="title"
              placeholder={'Title'}
              value={title}
